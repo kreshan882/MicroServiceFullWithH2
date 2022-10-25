@@ -27,6 +27,7 @@ Git
 	git add service-registry/src/* service-registry/pom.xml
 	git add cloud-gateway/src/* cloud-gateway/pom.xml
 	git add cloud-config-server/src/* cloud-config-server/pom.xml
+	git add configServer/
 	
 	git status  ==> check status 
 	git commit -m "commit fst"
