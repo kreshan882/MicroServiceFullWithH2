@@ -1,5 +1,8 @@
 https://www.youtube.com/watch?v=BnknNTN8icw
 
+update every where it was support all
+<version>2.3.4.RELEASE</version>
+<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 Git
 ############################################################
    get file from Git BAST commant font
@@ -27,7 +30,8 @@ Git
 	git add service-registry/src/* service-registry/pom.xml
 	git add cloud-gateway/src/* cloud-gateway/pom.xml
 	git add cloud-config-server/src/* cloud-config-server/pom.xml
-	git add configServer/
+	git add configServer/*
+	git add hystrix-dashboard/src/* hystrix-dashboard/pom.xml
 	
 	git status  ==> check status 
 	git commit -m "commit fst"
@@ -103,8 +107,8 @@ Git
 			POST -> send request [http://localhost:7171/users/
 			GET  -> resi request [http://localhost:7171/users/1
 	
-			3.2) fall back mathod added to APi-Gateway ???????????????????????????????????
-					add "Hystrix" -> POM details added to cloud-gateway  --- not loading???
+			3.2) fall back mathod added to APi-Gateway 
+					add "Hystrix" -> POM details added to cloud-gateway  
 					<dependency>
 						<groupId>org.springframework.cloud</groupId>
 						<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
@@ -112,21 +116,22 @@ Git
 					</dependency> 
 					
 				hystrix:
-  					command: ??????????? not found
+  					command: server down response showing.....
   					
-4) Hystrix-dashboard [Eureka Discovery client + histeric dashboard] ?????????????????????
-		http://localhost:7073/hystrix --> DashBoard Page
-			add apiStriming and monitor ===>> http://localhost:7171/actuator/hystrix.strean
+4) Hystrix-dashboard [Eureka Discovery client + histeric dashboard] 
+		http://localhost:9295/hystrix --> DashBoard Page
+			add apiStriming and monitor (cloude-gateway port)  ??????????????????
+			===>> http://localhost:7171/actuator/hystrix.strean ????????? where can get
    ####################################################################
    time 1.02 ======> only dash board not working because no histerix
    ####################################################################
    
-   when down redirect not working y???
+   
    
    
 5) config server  [Eureka Discovery client + ConfigServer]
-	cloud-config-server--> all config in single place
-	1.02 -1.11
+	cloud-config-server--> all config in single place + add details to pom all service
+	
 	
 6) ZipKin server => log with trce no (1.12-1.21)
 	Download ==> https://zipkin.io/pages/quickstart  (java -> latest release)
