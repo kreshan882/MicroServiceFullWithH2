@@ -4,13 +4,22 @@ server:
 spring:
  application:
     name: CONFIG-SERVER
-      
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-      
-  instance: 
-    hostname: localhost
+ cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/kreshan882/config-server
+#          uri: https://github.com/kreshan882/MicroServiceFullWithH2/configServer
+          clone-on-start: true  
+#spring: 
+  
+#spring.profiles.active=native  
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#      
+#  instance: 
+#    hostname: localhost

@@ -12,22 +12,20 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: USER-SERVICE
-#                fallbackuri: forward:/userServiceFallBack
-                
-                
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: USER-SERVICE
+                fallbackuri: forward:/userServiceFallBack
         - id: DEPARTMENT-SERVICE
           uri: lb://DEPARTMENT-SERVICE
           predicates:
             - Path=/departments/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: DEPARTMENT-SERVICE
-#                fallbackuri: forward:/departmentServiceFallBack
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: DEPARTMENT-SERVICE
+                fallbackuri: forward:/departmentServiceFallBack
                 
 #hystrix:
 #  command:
@@ -42,13 +40,14 @@ spring:
 #    web:
 #      exposure:
 #        include: hystrix.stream
-              
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
       
-  instance: 
-    hostname: localhost
+# now in cloud        
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#      
+#  instance: 
+#    hostname: localhost
