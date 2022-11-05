@@ -27,19 +27,19 @@ spring:
                 name: DEPARTMENT-SERVICE
                 fallbackuri: forward:/departmentServiceFallBack
                 
-#hystrix:
-#  command:
-#    fallbackcmd:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 4000
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: hystrix.stream
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
       
 # now in cloud        
 #eureka:

@@ -38,18 +38,21 @@ Git
 	git log
 	git push https://github.com/kreshan882/MicroServiceFullWithH2.git
 
+	git pull https://github.com/kreshan882/MicroServiceFullWithH2.git --> if have issue
 ##########################################################
-
-1) create new SpringBoot [department-service + user-service]
-        1.1) https://start.spring.io
-        1.2) SpringToolSuit4
+CREATE_PROJECT
+		A) https://start.spring.io
+		B) SpringToolSuit4
             Group :com.msdemokre
             Artific :department-service
             Name    :department-service
             Description:department-service
             package Name: com.msdemokre.department
-	1.1) Addedd component
-    	SpringWeb + Spring Data Jpa + H2 database + Lambok
+
+#############################################################            
+1) create new SpringBoot [department-service + user-service]
+        
+	1.1) Added component [ SpringWeb + Spring Data Jpa + H2 database + Lambok ]
 
 	1.2) Run As SpringBootApp
 
@@ -65,7 +68,6 @@ Git
 	    
 	    GET -> get response [http://localhost:7001/departments/1]
     
-
 	1.4) postman [User]
 		POST -> send request [http://localhost:7002/users/]
 			{
@@ -77,6 +79,7 @@ Git
 		Send request
 	    
 	    GET -> get response [http://localhost:7002/users/1]
+    
     
 2) Service_registery = discoveryServer [ eureka Server] 
     		Group :com.msdemokre
@@ -119,14 +122,13 @@ Git
   					command: server down response showing.....
   					
 4) Hystrix-dashboard [Eureka Discovery client + histeric dashboard] 
-		http://localhost:9295/hystrix --> DashBoard Page
-			add apiStriming and monitor (cloude-gateway port)  ??????????????????
-			===>> http://localhost:7171/actuator/hystrix.strean ????????? where can get
-   ####################################################################
-   time 1.02 ======> only dash board not working because no histerix
-   ####################################################################
-   
-   
+		4.1) http://localhost:9295/hystrix --> DashBoard Page
+		4.2) api_gateway historicStream
+				hystrix: command: (auto create mataData --> MATA-INF/...)
+				http://localhost:7171/actuator/hystrix.stream  ==> loading
+		
+		4.3) add historicStream to DashBoard Page -> Monitor Stream success
+				* service req count /fail list can monitor
    
    
 5) config server  [Eureka Discovery client + ConfigServer]
@@ -135,13 +137,19 @@ Git
 	
 6) ZipKin server => log with trce no (1.12-1.21)
 	Download ==> https://zipkin.io/pages/quickstart  (java -> latest release)
-	Start ==> java -jar zipkin.jar
-	chrome: http://127.0.0.1:9411/
+	Start ==> java -jar zipkin.jar (after run get the url in putty)
+	chrome: http://127.0.0.1:9411/ ===> do below steps to Service
 	
-	6.1) install ZipKin client ,
-		 add "ZipKin client" -> POM details to department_service+user_service+ext..
+	6.1) Addedd component to micro service --> ZipKin client + sleuth
+		 add POM details to department_service+user_service+ext..
 		 add spring: zipkin: base-url:http://127.0.0.1:9411/
 		 
-		 Log[ DEPARTMENT-SERVICE:1111-trcId:111,true] ---> all logs are one place
-		 
+	6.2)Logy
+		Depart  ==> INFO [DEPARTMENT-SERVICE,0c6a6dcf61be23b5,b316fc934713e695,true]
+		User =====> INFO [USER-SERVICE,0c6a6dcf61be23b5,b316fc934713e695,true]
+			Service Id: which service loading
+		 	Trace Id: uniqe id for single txn
+		    span Id: uniqe id for (single TXN+Each service)
+	6.3) all logs are one place WEB [http://127.0.0.1:9411/zipkin]
+		 	
 		 
