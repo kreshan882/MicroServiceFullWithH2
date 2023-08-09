@@ -52,7 +52,7 @@ CREATE_PROJECT
 #############################################################            
 1) create new SpringBoot [department-service + user-service]
         
-	1.1) Added component [ SpringWeb + Spring Data Jpa + H2 database + Lambok ]
+	1.1) Added component [ Spring Web + Spring Data Jpa + H2 database + Lombok ]
 
 	1.2) Run As SpringBootApp
 
@@ -152,4 +152,26 @@ CREATE_PROJECT
 		    span Id: uniqe id for (single TXN+Each service)
 	6.3) all logs are one place WEB [http://127.0.0.1:9411/zipkin]
 		 	
-		 
+===================================================================
+Run Sequence  09/08/2023
+===================================================================
+[check java version in STS & maven install]
+1) service-registry  ==> 	[ http://localhost:8761/ ]
+		(Eureka service registry server)
+
+2) cloude-config-server  ==> [CONFIG-SERVER : 7276 ]
+		call configServer[GIT] -> service-registry(8761)  (Error fixed:  added bootstrap: true in application.yml)
+		
+3) department-service ==> [ DEPARTMENT-SERVICE : 7001]
+		call register with cloude-config-server (7276)
+		3.1) POST+ http://localhost:7001/departments/ + {json} --> fail to send record??????
+		3.2) h2 db view ???
+		
+4) userser
+5) cloude gateway
+		http://localhost:7171/departments/
+6) hystrix-dashboard
+7) ZipKin server => log with trce no
+		
+		
+		
