@@ -18,11 +18,11 @@ Git
 	cd PERSONAL_SPRINGBOOT_MS/
 	git init
 	
-	git add department-service/src/* department-service/pom.xml department-service/mvnw* department-service/mvnw.cmd department-service/.gitignore department-service/ReadMeK.txt department-service/.mvn
-	git add user-service/src/* user-service/pom.xml user-service/mvnw* user-service/mvnw.cmd user-service/.gitignore user-service/.mvn/*
-	git add service-registry/src/* service-registry/pom.xml service-registry/mvnw* service-registry/mvnw.cmd service-registry/.gitignore service-registry/.mvn/*
-	git add cloud-gateway/src/* cloud-gateway/pom.xml cloud-gateway/mvnw* cloud-gateway/mvnw.cmd cloud-gateway/.gitignore cloud-gateway/.mvn/*
-	git add cloud-config-server/src/* cloud-config-server/pom.xml cloud-config-server/mvnw* cloud-config-server/mvnw.cmd cloud-config-server/.gitignore cloud-config-server/.mvn/*
+	----git add department-service/src/* department-service/pom.xml department-service/mvnw* department-service/mvnw.cmd department-service/.gitignore department-service/ReadMeK.txt department-service/.mvn
+	----git add user-service/src/* user-service/pom.xml user-service/mvnw* user-service/mvnw.cmd user-service/.gitignore user-service/.mvn/*
+	----git add service-registry/src/* service-registry/pom.xml service-registry/mvnw* service-registry/mvnw.cmd service-registry/.gitignore service-registry/.mvn/*
+	----git add cloud-gateway/src/* cloud-gateway/pom.xml cloud-gateway/mvnw* cloud-gateway/mvnw.cmd cloud-gateway/.gitignore cloud-gateway/.mvn/*
+	----git add cloud-config-server/src/* cloud-config-server/pom.xml cloud-config-server/mvnw* cloud-config-server/mvnw.cmd cloud-config-server/.gitignore cloud-config-server/.mvn/*
 	
 	
 	git add department-service/src/* department-service/pom.xml department-service/ReadMeK.txt 
@@ -32,6 +32,7 @@ Git
 	git add cloud-config-server/src/* cloud-config-server/pom.xml
 	git add configServer/*
 	git add hystrix-dashboard/src/* hystrix-dashboard/pom.xml
+	git add ZIPKIN_logtrazer/*
 	
 	git status  ==> check status 
 	git commit -m "commit fst"
@@ -144,7 +145,7 @@ CREATE_PROJECT
 		 add POM details to department_service+user_service+ext..
 		 add spring: zipkin: base-url:http://127.0.0.1:9411/
 		 
-	6.2)Logy
+	6.2)Log
 		Depart  ==> INFO [DEPARTMENT-SERVICE,0c6a6dcf61be23b5,b316fc934713e695,true]
 		User =====> INFO [USER-SERVICE,0c6a6dcf61be23b5,b316fc934713e695,true]
 			Service Id: which service loading
@@ -155,23 +156,51 @@ CREATE_PROJECT
 ===================================================================
 Run Sequence  09/08/2023
 ===================================================================
-[check java version in STS & maven install]
+A) install java 1.8.0.351 
+B) install lombok(1.18.28) to eclipes(STS4.19.0)
+		1) download https://projectlombok.org/  (
+		2) run inside eclipes folder (java -jar lombok-1.16.12.jar)
+		3) small ui select eclipes path and install
+	
+
 1) service-registry  ==> 	[ http://localhost:8761/ ]
 		(Eureka service registry server)
 
 2) cloude-config-server  ==> [CONFIG-SERVER : 7276 ]
-		call configServer[GIT] -> service-registry(8761)  (Error fixed:  added bootstrap: true in application.yml)
+		call configServer[GIT] -> service-registry(8761) 
+		** using ConfigServer Configuration file
 		
 3) department-service ==> [ DEPARTMENT-SERVICE : 7001]
 		call register with cloude-config-server (7276)
-		3.1) POST+ http://localhost:7001/departments/ + {json} --> fail to send record??????
-		3.2) h2 db view ???
+		3.1) POST+ http://localhost:7001/departments/ + {json} 
 		
-4) userser
-5) cloude gateway
-		http://localhost:7171/departments/
-6) hystrix-dashboard
+		3.2) h2 table watching in application.proporties --> success
+		
+4) user-service ==>  [ USER-SERVICE : 7002]
+		call register with cloude-config-server (7276)
+		4.1) POST+ http://localhost:7001/users/ + {json} 
+		
+5) cloude gateway  ==> [API-GATEWAY : 7171 ]
+		call register with cloude-config-server (7276)
+		5.1) http://localhost:7171/departments/departments/ + {json}
+		5.2) cloude/gatewat/route predicates=/users/**
+								  filters=fallbackuri: forward:/userServiceFallBack (when CircuitBreaker)
+		
+6) hystrix-dashboard ===> [HYSTRIX-DASHBOARD: 9295]
+		call register with cloude-config-server (7276)
+		6.1) http://localhost:9295/hystrix --> DashBoard Page
+		6.2) http://localhost:7171/actuator/hystrix.stream  (add cloude gateway path to monitor stream)
+		
+		
 7) ZipKin server => log with trce no
+		download => https://zipkin.io/pages/quickstart  (java -> latest release)
+		run      => java -jar zipkin.jar (after run get the url in putty)
+		chrome   => http://127.0.0.1:9411/
 		
+		7.1) add pom to microservices( ZipKin client + sleuth)
+		     add url to micro services  http://127.0.0.1:9411/
+		     
+		7.2) url -> RUN QUERY
+		     
 		
 		
