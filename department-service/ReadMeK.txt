@@ -15,7 +15,7 @@ Git
 	upload Git BAST commant font
 	================================
 	git config --global user.email "kreshan882@gmail.com"
-	cd PERSONAL_SPRINGBOOT_MS/
+	cd MicroServiceFullWithH2/
 	git init
 	
 	----git add department-service/src/* department-service/pom.xml department-service/mvnw* department-service/mvnw.cmd department-service/.gitignore department-service/ReadMeK.txt department-service/.mvn
